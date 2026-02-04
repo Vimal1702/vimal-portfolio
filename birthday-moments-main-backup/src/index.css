@@ -1,128 +1,117 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
-@custom-variant dark (&:is(.dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-:root {
-  --sh-class: #7aa2f7;
-  --sh-sign: #89ddff;
-  --sh-string: #9ece6a;
-  --sh-keyword: #bb9af7;
-  --sh-comment: #565f89;
-  --sh-jsxliterals: #7aa2f7;
-  --sh-property: #73daca;
-  --sh-entity: #e0af68;
-}
-
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-/* Birthday Moments Custom Styles */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap');
 
 @layer base {
   :root {
-    /* Birthday Moments Design Tokens */
-    --font-display: 'Cormorant Garamond', serif;
-    --font-body: 'Inter', sans-serif;
-
-    /* Light mode colors */
     --background: 30 40% 98%;
     --foreground: 20 15% 25%;
+
     --card: 30 30% 97%;
     --card-foreground: 20 15% 25%;
+
     --popover: 30 40% 99%;
     --popover-foreground: 20 15% 25%;
+
     --primary: 15 60% 70%;
     --primary-foreground: 20 15% 15%;
+
     --secondary: 30 25% 92%;
     --secondary-foreground: 20 15% 30%;
+
     --muted: 30 20% 94%;
     --muted-foreground: 20 10% 50%;
+
     --accent: 350 45% 75%;
     --accent-foreground: 20 15% 20%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
     --border: 30 20% 90%;
     --input: 30 20% 90%;
     --ring: 15 50% 65%;
+
+    --radius: 1rem;
+
+    /* Custom design tokens */
+    --gradient-warm: linear-gradient(135deg, hsl(30 50% 95%) 0%, hsl(350 40% 92%) 50%, hsl(15 45% 90%) 100%);
+    --gradient-landing: linear-gradient(180deg, hsl(30 40% 97%) 0%, hsl(350 35% 94%) 50%, hsl(15 50% 92%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(20 30% 70% / 0.15);
+    --shadow-card: 0 8px 32px -8px hsl(20 30% 60% / 0.12);
+    --shadow-modal: 0 24px 64px -16px hsl(20 30% 40% / 0.25);
+
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Inter', sans-serif;
   }
 
   .dark {
-    /* Dark mode colors */
     --background: 20 15% 10%;
     --foreground: 30 20% 90%;
+
     --card: 20 15% 12%;
     --card-foreground: 30 20% 90%;
+
     --popover: 20 15% 12%;
     --popover-foreground: 30 20% 90%;
+
     --primary: 15 50% 65%;
     --primary-foreground: 20 15% 10%;
+
     --secondary: 20 15% 18%;
     --secondary-foreground: 30 20% 85%;
+
     --muted: 20 15% 20%;
     --muted-foreground: 30 15% 60%;
+
     --accent: 350 40% 60%;
     --accent-foreground: 30 20% 95%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
     --border: 20 15% 20%;
     --input: 20 15% 20%;
     --ring: 15 45% 55%;
   }
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
 @layer components {
   .landing-gradient {
-    background: linear-gradient(180deg, hsl(30 40% 97%) 0%, hsl(350 35% 94%) 50%, hsl(15 50% 92%) 100%);
+    background: var(--gradient-landing);
   }
 
   .warm-gradient {
-    background: linear-gradient(135deg, hsl(30 50% 95%) 0%, hsl(350 40% 92%) 50%, hsl(15 45% 90%) 100%);
+    background: var(--gradient-warm);
   }
 
   .shadow-soft {
-    box-shadow: 0 4px 20px -4px hsl(20 30% 70% / 0.15);
+    box-shadow: var(--shadow-soft);
   }
 
   .shadow-card {
-    box-shadow: 0 8px 32px -8px hsl(20 30% 60% / 0.12);
+    box-shadow: var(--shadow-card);
   }
 
   .shadow-modal {
-    box-shadow: 0 24px 64px -16px hsl(20 30% 40% / 0.25);
+    box-shadow: var(--shadow-modal);
   }
 }
 
@@ -148,7 +137,6 @@ html.lenis body {
       opacity: 0;
       transform: translateY(20px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
@@ -159,7 +147,6 @@ html.lenis body {
     from {
       opacity: 0;
     }
-
     to {
       opacity: 1;
     }
@@ -170,7 +157,6 @@ html.lenis body {
       opacity: 0;
       transform: scale(0.95);
     }
-
     to {
       opacity: 1;
       transform: scale(1);
@@ -178,12 +164,9 @@ html.lenis body {
   }
 
   @keyframes gentlePulse {
-
-    0%,
-    100% {
+    0%, 100% {
       opacity: 0.6;
     }
-
     50% {
       opacity: 1;
     }
